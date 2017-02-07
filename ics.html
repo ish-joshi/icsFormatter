@@ -307,7 +307,7 @@ var buildICSEntry = function( javascriptExampleDateObject ){
                      var description = campus + " " + desc;
 
 
-                     calEntry.addEvent(title, description, place, periodBegin.toUTCString(), endTime.toUTCString());
+                     calEntry.addEvent(title, description, finalLoc, periodBegin.toUTCString(), endTime.toUTCString());
 
                      periodBegin = new Date(periodBegin.getTime() + 604800000);
                  }
@@ -329,7 +329,7 @@ var buildICSEntry = function( javascriptExampleDateObject ){
                  var description = campus + " " + desc;
 
 
-                 calEntry.addEvent(title, description, place, periodBegin.toUTCString(), endTime.toUTCString());
+                 calEntry.addEvent(title, description, finalLoc, periodBegin.toUTCString(), endTime.toUTCString());
              }
 
 
