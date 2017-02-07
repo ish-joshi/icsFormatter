@@ -1,0 +1,358 @@
+<!DOCTYPE  html>
+<head>
+<script>
+    var locationData =  "CL_14All 14 Alliance Lane CL_72 Engineering 72, Alexander Stewart Theatre\n" +
+            "CL_16All 16 Alliance Lane CL_35 Engineering 35\n" +
+            "CL_17All 17 Alliance Lane CL_37 Engineering 37\n" +
+            "CL_18All 18 Alliance Lane CL_36 Engineering 36\n" +
+            "CL_22All 22 Alliance Lane CL_69 Engineering 69\n" +
+            "CL_9Anc 9 Ancora Imparo Way CL_13E Medicine E\n" +
+            "CL_12Anc 12 Ancora Imparo Way CL_54 Japanese Study Centre\n" +
+            "CL_15Anc 15 Ancora Imparo Way CL_12 Law & Theatres L1‐L5\n" +
+            "CL_21Anc 21 Ancora Imparo Way CL_55 Gallery Building\n" +
+            "CL_29Anc 29 Ancora Imparo Way CL_06 Education\n" +
+            "CL_10Chn 10 Chancellors Walk CL_13C Medicine C & Theatres M2‐M3\n" +
+            "CL_11Chn 11 Chancellors Walk CL_16 Biochemistry Laboratories\n" +
+            "CL_20Chn 20 Chancellors Walk CL_11 Menzies & Theatres H1‐H10\n" +
+            "CL_21Chn 21 Chancellors Walk CL_10 Campus Centre\n" +
+            "CL_10Col 10 College Walk CL_27 Senior Physics\n" +
+            "CL_13Col 13 College Walk CL_30 Hargrave‐Andrew Library\n" +
+            "CL_19Col 19 College Walk CL_33 Engineering 33\n" +
+            "CL_21Col 21 College Walk CL_32 Engineering Lecture Theatres E1‐E6\n" +
+            "CL_23Col 23 College Walk CL_60 Engineering 60\n" +
+            "CL_25Exh 25 Exhibition Walk CL_63 Faculty Information Technology & Central 1 Theatre\n" +
+            "CL_38Exh 38 Exhibition Walk CL_09 Religious Centre\n" +
+            "CL_46Exh 46 Exhibition Walk CL_08 Rotunda R1‐R7\n" +
+            "CL_48Exh 48 Exhibition Walk CL_07 Alexander Theatre\n" +
+            "CL_1/270FGR 1/270 Ferntree Gully Road NH_01 Omnico Business Park ‐ Building 1\n" +
+            "CL_2/270FGR 2/270 Ferntree Gully Road NH_02 Omnico Business Park ‐ Building 2\n" +
+            "CL_9/270FGR 9/270 Ferntree Gully Road NH_03 Omnico Business Park ‐ Building 9\n" +
+            "CL_12Inn 12 Innovation Walk CL_53 Microbiology & Biological Sciences\n" +
+            "CL_15Inn 15 Innovation Walk CL_75, STRIP1 STRIP1 ‐ Monash Biotechnology\n" +
+            "CL_18Inn 18 Innovation Walk CL_17 Biology\n" +
+            "CL_19Inn 19 Innovation Walk STRIP2 STRIP2 ‐ Biomedical Sciences\n" +
+            "CL_23Inn 23 Innovation Walk STRIP3 STRIP3 ‐ Biomedical Sciences\n" +
+            "CL_26Inn 26 Innovation Walk CL_13F Medicine F\n" +
+            "CL_9Rnf 9 Rainforest Walk CL_28 Mathematics & EAE\n" +
+            "CL_11Rnf 11 Rainforest Walk CL_29 Science Theatres (North) S13‐S15\n" +
+            "CL_14Rnf 14 Rainforest Walk CL_26 Information Technology & Faculty of Science\n" +
+            "CL_15Rnf 15 Rainforest Walk CL_24 Science Theatres (West) S5‐S6\n" +
+            "CL_16Rnf 16 Rainforest Walk CL_25 Science Theatres (East) S1‐S4, S9‐S12\n" +
+            "CL_17Rnf 17 Rainforest Walk CL_23 Senior Chemistry\n" +
+            "CL_19Rnf 19 Rainforest Walk CL_19 Central Science\n" +
+            "CL_21Rnf 21 Rainforest Walk CL_21 Zoology / Biological Sciences Lecture Theatres S7‐S8\n" +
+            "CL_22Rnf 22 Rainforest Walk CL_20 Chemistry / Old Science Laboratories\n" +
+            "CL_23Rnf 23 Rainforest Walk CL_22 First Year Biology\n" +
+            "CL_25Rnf 25 Rainforest Walk CL_18 Biological Sciences\n" +
+            "CL_27Rnf 27 Rainforest Walk CL_15 Medical & Health Science\n" +
+            "CL_35Rnf 35 Rainforest Walk CL_13D Medicine D\n" +
+            "CL_37Rnf 37 Rainforest Walk CL_13A Medicine A & Theatre M1\n" +
+            "CL_39Rnf 39 Rainforest Walk CL_13B Medicine B\n" +
+            "CL_43Rnf 43 Rainforest Walk CL_64 Faculty of Medicine Offices & South 1 Theatre\n" +
+            "CL_20Res 20 Research Way CL_82 New Horizons\n" +
+            "CL_36Sce 36 Scenic Boulevard Sports Doug Ellis Swimming Pool\n" +
+            "CL_42Sce 42 Scenic Boulevard Sports Monash Sport\n" +
+            "CL_49Sce 49 Scenic Boulevard RBH Robert Blackwood Hall\n" +
+            "CL_55Sce 55 Scenic Boulevard CL_68 Performing Arts Centre\n" +
+            "CL_57Sce 57 Scenic Boulevard CL_05 Krongold Centre\n";
+
+
+
+    var icsFormatter = function() {
+    'use strict';
+
+    if (navigator.userAgent.indexOf('MSIE') > -1 && navigator.userAgent.indexOf('MSIE 10') == -1) {
+        console.log('Unsupported Browser');
+        return;
+    }
+
+    var SEPARATOR = (navigator.appVersion.indexOf('Win') !== -1) ? '\r\n' : '\n';
+    var calendarEvents = [];
+    var calendarStart = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0'
+    ].join(SEPARATOR);
+    var calendarEnd = SEPARATOR + 'END:VCALENDAR';
+
+    return {
+        /**
+         * Returns events array
+         * @return {array} Events
+         */
+        'events': function() {
+            return calendarEvents;
+        },
+
+        /**
+         * Returns calendar
+         * @return {string} Calendar in iCalendar format
+         */
+        'calendar': function() {
+            return calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
+        },
+
+        /**
+         * Add event to the calendar
+         * @param  {string} subject     Subject/Title of event
+         * @param  {string} description Description of event
+         * @param  {string} location    Location of event
+         * @param  {string} begin       Beginning date of event
+         * @param  {string} stop        Ending date of event
+         */
+        'addEvent': function(subject, description, location, begin, stop) {
+            // I'm not in the mood to make these optional... So they are all required
+            if (typeof subject === 'undefined' ||
+                typeof description === 'undefined' ||
+                typeof location === 'undefined' ||
+                typeof begin === 'undefined' ||
+                typeof stop === 'undefined'
+            ) {
+                return false;
+            }
+
+            //TODO add time and time zone? use moment to format?
+            var start_date = new Date(begin);
+            var end_date = new Date(stop);
+
+            var start_year = ("0000" + (start_date.getFullYear().toString())).slice(-4);
+            var start_month = ("00" + ((start_date.getMonth() + 1).toString())).slice(-2);
+            var start_day = ("00" + ((start_date.getDate()).toString())).slice(-2);
+            var start_hours = ("00" + (start_date.getHours().toString())).slice(-2);
+            var start_minutes = ("00" + (start_date.getMinutes().toString())).slice(-2);
+            var start_seconds = ("00" + (start_date.getMinutes().toString())).slice(-2);
+
+            var end_year = ("0000" + (end_date.getFullYear().toString())).slice(-4);
+            var end_month = ("00" + ((end_date.getMonth() + 1).toString())).slice(-2);
+            var end_day = ("00" + ((end_date.getDate()).toString())).slice(-2);
+            var end_hours = ("00" + (end_date.getHours().toString())).slice(-2);
+            var end_minutes = ("00" + (end_date.getMinutes().toString())).slice(-2);
+            var end_seconds = ("00" + (end_date.getMinutes().toString())).slice(-2);
+
+            // Since some calendars don't add 0 second events, we need to remove time if there is none...
+            var start_time = '';
+            var end_time = '';
+            if (start_minutes + start_seconds + end_minutes + end_seconds !== 0) {
+                start_time = 'T' + start_hours + start_minutes + start_seconds;
+                end_time = 'T' + end_hours + end_minutes + end_seconds;
+            }
+
+            var start = start_year + start_month + start_day + start_time;
+            var end = end_year + end_month + end_day + end_time;
+
+            var calendarEvent = [
+                'BEGIN:VEVENT',
+                'CLASS:PUBLIC',
+                'DESCRIPTION:' + description,
+                'DTSTART:' + start,
+                'DTEND:' + end,
+                'LOCATION:' + location,
+                'SUMMARY;LANGUAGE=en-us:' + subject,
+                'TRANSP:TRANSPARENT',
+                'END:VEVENT'
+            ].join(SEPARATOR);
+
+            calendarEvents.push(calendarEvent);
+            return calendarEvent;
+        },
+
+        /**
+         * Download calendar using the saveAs function from filesave.js
+         * @param  {string} filename Filename
+         * @param  {string} ext      Extention
+         */
+        'download': function(filename, ext) {
+            if (calendarEvents.length < 1) {
+                return false;
+            }
+
+            ext = (typeof ext !== 'undefined') ? ext : '.ics';
+            filename = (typeof filename !== 'undefined') ? filename : 'calendar';
+            var calendar = calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
+            window.open( "data:text/calendar;charset=utf8," + escape(calendar));
+        }
+    };
+};
+
+if (typeof define === "function" && define.amd) {
+  /* AMD Format */
+  define("icsFormatter", [], function() {
+    return icsFormatter();
+  });
+} else if (typeof module === "object" && module.exports) {
+  /* CommonJS Format */
+  module.exports = icsFormatter();
+} else {
+  /* Plain Browser Support */
+  this.myModule = icsFormatter();
+}
+</script>
+<script>
+	
+var buildICSEntry = function( javascriptExampleDateObject ){
+
+    	/*var calEntry = icsFormatter();
+
+    	var title = 'sometitlestring';
+    	var place = 'our secret meeting place';
+    	var begin = new Date();
+    	var end = new Date(begin.getTime() + 30*60000);
+
+    	var description = 'A very long and boring description of what is the agenda of this super exclusiv pow-wow';
+
+		calEntry.addEvent(title,description, place, begin.toUTCString(), begin.toUTCString());
+		calEntry.download('ourSecretMeeting');*/
+ }
+
+ function make(){
+     var calEntry = icsFormatter();
+
+     text = document.getElementById("csvValues").value;
+
+     //check OK
+     var data = text.split('\n');
+
+
+     //data.length OK
+     for(i=1; i < data.length; i++){
+
+         var subjectCode,desc,group,activity,day,time,campus,location,staff,duration,dates;
+         var arraydata = data[i].split(',');
+
+         //fetch all variables of a row
+         subjectCode = arraydata[0];
+         desc = arraydata[1];
+         group = arraydata[2];
+         activity = arraydata[3];
+         day = arraydata[4];
+         time = arraydata[5];
+         campus = arraydata[6];
+         location = arraydata[7];
+         staff = arraydata[8];
+         duration = arraydata[9];
+         dates = arraydata[10];
+
+         //constants
+         var tab = "\t";
+         var newline = "\n";
+
+         //variables check OK
+         /*console.log(subjectCode+ "\n" +desc+ "\n" +group+ "\n" +activity+ "\n" +day+ "\n" +time+
+                 "\n" +campus+ "\n" +location+ "\n" +staff+ "\n" +duration+ "\n" +dates+newline+newline);*/
+
+
+         var title = subjectCode + tab + desc + tab + group + activity ;
+         var place = location.substr(0,location.indexOf("/"));
+
+         //title and place OK
+//         console.log(title + newline + place);
+
+         var finalLoc = "";
+         var locFound = false;
+         var locations = locationData.split("\n");
+
+         for(j=0; j < locations.length && !locFound; j++){
+             var tempLocation = locations[j].split(" ");
+             var pl = tempLocation[0];
+             if(place==pl){
+                 finalLoc =  tempLocation[1] + " " + tempLocation[2] + " " + tempLocation[3];
+                 locFound = true;
+             }
+         }
+
+         if(!locFound){
+             finalLoc=location;
+         }
+
+         //finalLoc OK
+//         console.log(finalLoc);
+
+         var year, month, date, hours, minutes, seconds, milliseconds;
+         seconds = 0; milliseconds = 0; year = 2017;
+
+         var lessionDates = dates.split(" ");
+         for(q=0; q < lessionDates.length; q++){
+             var range = lessionDates[q].split('-');
+             var d, m;
+             var s = range[0].split("/");
+
+//             ('0' + deg).slice(-2)
+             d=('0' + s[0]).slice(-2);
+             m=('0' + s[1]).slice(-2);
+
+             var tData = time.split(":");
+
+             hours = tData[0]; minutes = tData[1];
+             var periodBegin = new Date(year, m-1,d,hours,minutes,0,0);
+
+             s = range[1].split("/");
+
+             var d2,m2;
+//             ('0' + deg).slice(-2)
+             d2=('0' + s[0]).slice(-2);
+             m2=('0' + s[1]).slice(-2);
+             var periodEnd = new Date(year, m2-1,d2,0,0,0,0);
+//             var periodEnd = new Date(year,)
+
+             console.log(periodBegin, periodEnd);
+
+            while(periodBegin.getTime() < periodEnd.getTime()){
+                var endTime = new Date(periodBegin.getTime() + duration.charAt(0)*60*60*1000);
+
+                var description = campus + " " + desc;
+
+
+
+                calEntry.addEvent(title,description, place, periodBegin.toUTCString(), endTime.toUTCString());
+
+                periodBegin = new Date(periodBegin.getTime() + 604800000);
+            }
+
+
+
+         }
+
+
+
+         /*var begin = new Date();
+         var end = new Date(begin.getTime() + 30*60000);
+
+         var description = 'A very long and boring description of what is the agenda of this super exclusiv pow-wow';
+
+         calEntry.addEvent(title,description, place, begin.toUTCString(), begin.toUTCString());*/
+
+     }
+     calEntry.download('MonashTT');
+
+
+//     calEntry.download('ourSecretMeeting');
+ }
+
+ function findLocation(place){
+    //too gg to code without return working properly
+     //I worked this out but can't be bothered making it a seperate function.
+ }
+</script>
+</head>
+<body>
+    <h1>Allocate+ to Calendar</h1>
+    <h3>Your text here...</h3>
+    <textarea style="height: 12em; width: 75%" placeholder="Copy Paste your timetable excel file" id="csvValues"></textarea>
+    <br><button id="submit" onclick="make()">Make .ics</button>
+</body>
+
+<!--Subject Code	Description	Group	Activity	Day	Time	Campus	Location	Staff	Duration	Dates-->
+<!--
+Subject Code,Description,Group,Activity,Day,Time,Campus,Location,Staff,Duration,Dates
+FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Laboratory,12,Thu,18:00,CL,CL_14Rnf/146,-,2 hrs,2/3-13/4 27/4-25/5
+FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Lecture,02-P2,Tue,13:00,CL,CL_21Col/E3,Aamir Cheema,1 hr,28/2-11/4 25/4-23/5
+FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Lecture,02-P1,Mon,15:00,CL,CL_21Col/E3,Aamir Cheema,1 hr,27/2-10/4 24/4-22/5
+FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Tutorial,28,Tue,10:00,CL,CL_7Inn/CG22,-,2 hrs,28/2-11/4 25/4-23/5
+FIT1047_CL_S1_DAY,INTRO CSN&SEC,Laboratory,23,Tue,17:00,CL,CL_23Col/G44,-,2 hrs,28/2-11/4 25/4-23/5
+FIT1047_CL_S1_DAY,INTRO CSN&SEC,Lecture,01-P2,Wed,16:00,CL,CL_43Rnf/STH1,Guido Tack (1/3-12/4 26/4-24/5) Carsten Rudolph (1/3-12/4 26/4-24/5),1 hr,1/3-12/4 26/4-24/5
+FIT1047_CL_S1_DAY,INTRO CSN&SEC,Lecture,01-P1,Tue,14:00,CL,CL_43Rnf/STH1,Guido Tack (28/2-11/4 25/4-23/5) Carsten Rudolph (28/2-11/4 25/4-23/5),1 hr,28/2-11/4 25/4-23/5
+MAT1830_CL_S1_DAY,DISC MATH COMPSC,Lecture,01-P2,Thu,12:00,CL,CL_25Exh/C1,-,1 hr,2/3-13/4 27/4-25/5
+MAT1830_CL_S1_DAY,DISC MATH COMPSC,Lecture,01-P3,Fri,16:00,CL,CL_25Exh/C1,-,1 hr,3/3-14/4 28/4-26/5
+MAT1830_CL_S1_DAY,DISC MATH COMPSC,Lecture,01-P1,Wed,12:00,CL,CL_25Exh/C1,-,1 hr,1/3-12/4 26/4-24/5
+MAT1830_CL_S1_DAY,DISC MATH COMPSC,Support-Class,13,Mon,11:30,CL,CL_7Inn/CG10,-,1.5 hrs,6/3-10/4 24/4-22/5
+MGF1010_CA_S1_DAY,INTRO TO MGT,Workshop,12,Thu,8:00,CA,CA_N/N202,-,2 hrs,2/3-13/4 27/4-25/5
+-->
