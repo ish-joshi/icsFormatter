@@ -1,16 +1,28 @@
 <!DOCTYPE  html>
 <head>
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-91540034-1', 'auto');
-  ga('send', 'pageview');
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-</script>
-<script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <style>
+        img {
+            width: 50%;
+            height: 700px;
+        }
+    </style>
+
+    <script>
+
     var locationData =  "CL_14All 14 Alliance Lane CL_72 Engineering 72, Alexander Stewart Theatre\n" +
             "CL_16All 16 Alliance Lane CL_35 Engineering 35\n" +
             "CL_17All 17 Alliance Lane CL_37 Engineering 37\n" +
@@ -72,7 +84,7 @@
     'use strict';
 
     if (navigator.userAgent.indexOf('MSIE') > -1 && navigator.userAgent.indexOf('MSIE 10') == -1) {
-        console.log('Unsupported Browser');
+        //console.log('Unsupported Browser');
         return;
     }
 
@@ -197,7 +209,19 @@ if (typeof define === "function" && define.amd) {
 }
 </script>
 <script>
-	
+
+    function submitfeedback() {
+        console.log("GG");
+        femail = document.getElementById("femail").value;
+        ffeedback = document.getElementById("ffeedback").value;
+        $.post('http://139.59.98.45/icsallocate/feedback.php', { email: femail, feedback : ffeedback},
+                function(returnedData){
+                    console.log(returnedData);
+                }).fail(function(){
+            console.log("error");
+        });
+    }
+
 var buildICSEntry = function( javascriptExampleDateObject ){
 
     	/*var calEntry = icsFormatter();
@@ -246,7 +270,7 @@ var buildICSEntry = function( javascriptExampleDateObject ){
          var newline = "\n";
 
          //variables check OK
-         /*console.log(subjectCode+ "\n" +desc+ "\n" +group+ "\n" +activity+ "\n" +day+ "\n" +time+
+         /*//console.log(subjectCode+ "\n" +desc+ "\n" +group+ "\n" +activity+ "\n" +day+ "\n" +time+
                  "\n" +campus+ "\n" +location+ "\n" +staff+ "\n" +duration+ "\n" +dates+newline+newline);*/
 
 
@@ -254,7 +278,7 @@ var buildICSEntry = function( javascriptExampleDateObject ){
          var place = location.substr(0,location.indexOf("/"));
 
          //title and place OK
-//         console.log(title + newline + place);
+//         //console.log(title + newline + place);
 
          var finalLoc = "";
          var locFound = false;
@@ -274,7 +298,7 @@ var buildICSEntry = function( javascriptExampleDateObject ){
          }
 
          //finalLoc OK
-//         console.log(finalLoc);
+         console.log(finalLoc);
 
          var year, month, date, hours, minutes, seconds, milliseconds;
          seconds = 0; milliseconds = 0; year = 2017;
@@ -287,7 +311,7 @@ var buildICSEntry = function( javascriptExampleDateObject ){
                  var d, m;
                  var s = range[0].split("/");
 
-
+//             ('0' + deg).slice(-2)
                  d = ('0' + s[0]).slice(-2);
                  m = ('0' + s[1]).slice(-2);
 
@@ -297,21 +321,25 @@ var buildICSEntry = function( javascriptExampleDateObject ){
                  minutes = tData[1];
                  var periodBegin = new Date(year, m - 1, d, hours, minutes, 0, 0);
 
-
+//             FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Laboratory,12,Thu,18:00,CL,CL_14Rnf/146,-,2 hrs,2/3-13/4 27/4-25/5
+                 /*BIO1011_CL_S1_DAY,BIOLOGY,Laboratory,53-P1,Wed,14:00,CL,CL_23Rnf/G04_Bay5,-,3 hrs,8/3 22/3 5/4 26/4 10/5
+             BIO1011_CL_S1_DAY,BIOLOGY,Laboratory,53-P2,Wed,14:00,CL,CL_23Rnf/G04_Bay5,-,1.5 hrs,1/3 24/5
+             BIO1011_CL_S1_DAY,BIOLOGY,Lecture_1,03-P1,Mon,09:00,CL,CL_21Rnf/S7,-,1 hr,27/2-20/3
+             BIO1011_CL_S1_DAY,BIOLOGY,Lecture_1,03-P2,Mon,09:00,CL,CL_43Rnf/STH1,-,1 hr,27/3-10/4 24/4-22/5*/
              s = range[1].split("/");
 
                  var d2, m2;
-//             
+//             ('0' + deg).slice(-2)
                  d2 = ('0' + s[0]).slice(-2);
                  m2 = ('0' + s[1]).slice(-2);
                  var periodEnd = new Date(year, m2 - 1, d2, 0, 0, 0, 0);
+//             var periodEnd = new Date(year,)
 
-
-                 console.log(periodBegin, periodEnd);
+                 //console.log(periodBegin, periodEnd);
 
                  while (periodBegin.getTime() < periodEnd.getTime()) {
                      var dur = duration.getNums();
-                     console.log(dur[0]);
+                     //console.log(dur[0]);
                      var endTime = new Date(periodBegin.getTime() +  dur[0] * 60 * 60 * 1000);
 
                      var description = campus + " " + desc;
@@ -333,7 +361,7 @@ var buildICSEntry = function( javascriptExampleDateObject ){
                  periodBegin = new Date(year, m2 - 1, d2, hours, minutes, 0, 0);
 
                  var dur = duration.getNums();
-                 console.log(dur[0]);
+                 //console.log(dur[0]);
                  var endTime = new Date(periodBegin.getTime() +  dur[0] * 60 * 60 * 1000);
 
                  var description = campus + " " + desc;
@@ -374,9 +402,26 @@ String.prototype.getNums= function(){
 </script>
 </head>
 <body>
+<nav class="navbar navbar-default">
+<form class="form-inline">
+    <h4>Feedback here</h4>
+    <div class="form-group">
+        <label for="femail">Email</label>
+        <input type="email" class="form-control" id="femail" placeholder="Monash email...">
+    </div>
+    <div class="form-group">
+        <label for="ffeedback">Feedback</label>
+        <textarea type="email" class="form-control" id="ffeedback" placeholder="Your feedback.."></textarea>
+    </div>
+
+
+</form>
+    <button type="submit" onclick="submitfeedback()" class="btn btn-default">Send  feedback</button>
+</nav>
+
     <h1>Allocate+ to Calendar</h1>
     <h3>Your text here...</h3>
-    <textarea style="height: 12em; width: 75%" placeholder="Copy Paste your timetable excel file" id="csvValues"></textarea>
+    <textarea style="height: 12em; width: 75%" placeholder="Copy Paste your csv file" id="csvValues"></textarea>
     <br><button id="submit" onclick="make()">Make .ics</button>
 
     <h2>Step 1</h2><br>
@@ -409,3 +454,19 @@ String.prototype.getNums= function(){
     <a href="https://support.google.com/calendar/answer/37118?hl=en">This guide</a>
 </body>
 
+<!--Subject Code	Description	Group	Activity	Day	Time	Campus	Location	Staff	Duration	Dates-->
+<!--
+Subject Code,Description,Group,Activity,Day,Time,Campus,Location,Staff,Duration,Dates
+FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Laboratory,12,Thu,18:00,CL,CL_14Rnf/146,-,2 hrs,2/3-13/4 27/4-25/5
+FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Lecture,02-P2,Tue,13:00,CL,CL_21Col/E3,Aamir Cheema,1 hr,28/2-11/4 25/4-23/5
+FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Lecture,02-P1,Mon,15:00,CL,CL_21Col/E3,Aamir Cheema,1 hr,27/2-10/4 24/4-22/5
+FIT1045_CL_S1_DAY,ALG PROG FUN PYTHON,Tutorial,28,Tue,10:00,CL,CL_7Inn/CG22,-,2 hrs,28/2-11/4 25/4-23/5
+FIT1047_CL_S1_DAY,INTRO CSN&SEC,Laboratory,23,Tue,17:00,CL,CL_23Col/G44,-,2 hrs,28/2-11/4 25/4-23/5
+FIT1047_CL_S1_DAY,INTRO CSN&SEC,Lecture,01-P2,Wed,16:00,CL,CL_43Rnf/STH1,Guido Tack (1/3-12/4 26/4-24/5) Carsten Rudolph (1/3-12/4 26/4-24/5),1 hr,1/3-12/4 26/4-24/5
+FIT1047_CL_S1_DAY,INTRO CSN&SEC,Lecture,01-P1,Tue,14:00,CL,CL_43Rnf/STH1,Guido Tack (28/2-11/4 25/4-23/5) Carsten Rudolph (28/2-11/4 25/4-23/5),1 hr,28/2-11/4 25/4-23/5
+MAT1830_CL_S1_DAY,DISC MATH COMPSC,Lecture,01-P2,Thu,12:00,CL,CL_25Exh/C1,-,1 hr,2/3-13/4 27/4-25/5
+MAT1830_CL_S1_DAY,DISC MATH COMPSC,Lecture,01-P3,Fri,16:00,CL,CL_25Exh/C1,-,1 hr,3/3-14/4 28/4-26/5
+MAT1830_CL_S1_DAY,DISC MATH COMPSC,Lecture,01-P1,Wed,12:00,CL,CL_25Exh/C1,-,1 hr,1/3-12/4 26/4-24/5
+MAT1830_CL_S1_DAY,DISC MATH COMPSC,Support-Class,13,Mon,11:30,CL,CL_7Inn/CG10,-,1.5 hrs,6/3-10/4 24/4-22/5
+MGF1010_CA_S1_DAY,INTRO TO MGT,Workshop,12,Thu,8:00,CA,CA_N/N202,-,2 hrs,2/3-13/4 27/4-25/5
+-->
