@@ -292,7 +292,7 @@ var buildICSEntry = function( javascriptExampleDateObject ){
 //         //console.log(title + newline + place);
 
          var finalLoc = "";
-         var locFound = false;
+         /*var locFound = false;
          var locations = locationData.split("\n");
 
          for(j=0; j < locations.length && !locFound; j++){
@@ -306,8 +306,31 @@ var buildICSEntry = function( javascriptExampleDateObject ){
 
          if(!locFound){
              finalLoc=location;
-         }
+         }*/
 
+	     var claytonStreetNames = {
+             All: "Alliance Lane",
+             Anc: "Ancora Imparo Way",
+             Chn: "Chancellors Walk",
+             Col: "College Walk",
+             Exh: "Exhibition Walk",
+             FGR: "Ferntree Gully Road",
+             Inn: "Innovation Walk",
+             Rnf: "Rainforest Walk",
+             Res: "Research Way",
+             Sce: "Scenic Boulevard"
+         };
+
+         var locationReplacements = [
+             [/Exh\w\//, "Exh/"]
+         ];
+	     //CREDITS TO MARK'S WEBSITE AT : https://mcpower.github.io/icallate/
+
+         var splitLocation = location.split("/");
+         if (splitLocation[0].startsWith("CL_") && claytonStreetNames.hasOwnProperty(splitLocation[0].substr(-3, 3))) {
+             location = "Room " + splitLocation[1] + ", " + splitLocation[0].slice(3, -3) + " " + claytonStreetNames[splitLocation[0].substr(-3, 3)];
+         }
+         finalLoc = location;
          //finalLoc OK
          console.log(finalLoc);
 
