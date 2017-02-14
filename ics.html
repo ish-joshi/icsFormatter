@@ -214,11 +214,22 @@ if (typeof define === "function" && define.amd) {
         console.log("GG");
         femail = document.getElementById("femail").value;
         ffeedback = document.getElementById("ffeedback").value;
-        $.post('http://139.59.98.45/icsallocate/feedback.php', { email: femail, feedback : ffeedback},
+        /*$.post('http://139.59.98.45/icsallocate/feedback.php', { email: femail, feedback : ffeedback},
                 function(returnedData){
                     console.log(returnedData);
                 }).fail(function(){
             console.log("error");
+        });*/
+        $.ajax({
+            url: 'http://139.59.98.45/icsallocate/feedback.php',
+            type: 'POST',
+            data: { email: femail, feedback : ffeedback} ,
+            success: function (response) {
+                alert(response.status);
+            },
+            error: function () {
+                alert("error");
+            }
         });
     }
 
