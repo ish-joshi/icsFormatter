@@ -108,6 +108,21 @@
             var start = start_year + start_month + start_day + start_time;
             var end = end_year + end_month + end_day + end_time;
 
+           /* var calendarEvent = [
+                'BEGIN:VEVENT',
+                'CLASS:PUBLIC',
+                'DESCRIPTION:' + description,
+                'DTSTART;TZID=Australia/Melbourne:' + start,
+                'DTEND;TZID=Australia/Melbourne:' + end,
+                'LOCATION:' + location,
+                'SUMMARY;LANGUAGE=en-us:' + subject,
+                'TRANSP:TRANSPARENT',
+                'END:VEVENT'
+            ].join(SEPARATOR);*/
+		
+		 var a = document.getElementById("clayton-addresses").checked;
+            if(a){
+                console.log("melbourne zone forced");
             var calendarEvent = [
                 'BEGIN:VEVENT',
                 'CLASS:PUBLIC',
@@ -118,7 +133,20 @@
                 'SUMMARY;LANGUAGE=en-us:' + subject,
                 'TRANSP:TRANSPARENT',
                 'END:VEVENT'
-            ].join(SEPARATOR);
+            ].join(SEPARATOR);}else{
+                console.log("auto time select");
+                var calendarEvent = [
+                    'BEGIN:VEVENT',
+                    'CLASS:PUBLIC',
+                    'DESCRIPTION:' + description,
+                    'DTSTART:' + start,
+                    'DTEND:' + end,
+                    'LOCATION:' + location,
+                    'SUMMARY;LANGUAGE=en-us:' + subject,
+                    'TRANSP:TRANSPARENT',
+                    'END:VEVENT'
+                ].join(SEPARATOR);
+            }
 
             calendarEvents.push(calendarEvent);
             return calendarEvent;
@@ -407,7 +435,14 @@ String.prototype.getNums= function(){
     <h1>Allocate+ to Calendar</h1>
     <h3>Your text here...</h3>
     <textarea style="height: 12em; width: 75%" placeholder="Copy Paste your csv file" id="csvValues"></textarea>
-    <br><button id="submit" onclick="make()">Make .ics</button>
+    <br>
+	<div class="checkbox">
+	    <label>
+		<input type="checkbox" value="" id="clayton-addresses">
+		Force Melbourne Time-zone (if not checked it'll use your default timezone)
+	    </label>
+	</div>
+	<button id="submit" onclick="make()">Make .ics</button>
 
     <h2>Step 1</h2><br>
     Open allocate+ and login
