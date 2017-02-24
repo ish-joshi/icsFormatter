@@ -1,6 +1,37 @@
 <!DOCTYPE  html>
 <head>
 
+    <!--<link href='fcal/fullcalendar.min.css' rel='stylesheet' />
+    <link href='fcal/fullcalendar.print.min.css' rel='stylesheet' media='print' />-->
+    <!--<script src='fcal/lib/jquery.min.js'></script>
+    <script src='fcal/lib/moment.min.js'></script>
+
+    <script src='fcal/lib/jquery-ui.min.js'></script>
+    <script src='fcal/fullcalendar.min.js'></script>-->
+
+    <!--<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+    <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+    <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
+    <script>
+        $(document).ready(function () {
+            $(document).ready(function() {
+                $('#calendar').fullCalendar({
+                    defaultDate: '2014-09-12',
+                    editable: true,
+                    eventLimit: true, // allow "more" link when too many events
+                });
+            });
+        });
+    </script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -14,6 +45,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+
+<!--
+    //cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js
+    //cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css
+    //cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.print.css-->
+
 
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -567,6 +604,16 @@
             </div>
 
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div id="calendar">
+        </div>
+    </div>
+    <div class="col-md-4">
+
     </div>
 </div>
 
