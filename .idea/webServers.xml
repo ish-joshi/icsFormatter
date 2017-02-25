@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="990d1563-b8a1-41ff-9bff-4a7eca36f96c" name="ishanjoshi.me" url="http://139.59.98.45">
+        <fileTransfer host="139.59.98.45" port="22" rootFolder="/var/www/html/icsFormatter/" accessType="SFTP" username="root">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
