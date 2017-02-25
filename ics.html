@@ -329,15 +329,11 @@
                 }
             }
 //TODO enable this download button
-            calEntry.download('MonashTT');
+            calEntry.download('MonashTT', 'ics');
+            localStorage.setItem('last', new Date().toDateString());
 
-
-            var rnum = Math.floor((Math.random() * 10) + 1);
-            if (rnum % 2 == 0) {
-                activaTab("feedback");
-            } else {
-                activaTab("about");
-            }
+            $("#last_created").innerHTML = (localStorage.getItem('last'));
+            activaTab("feedback");
         }
 
 
@@ -368,6 +364,12 @@
         function bodyLoad() {
             checkMobile();
         }
+
+        $(document).ready(function () {
+            alert("Hello");
+//            if(localStorage.getItem('last').length > 3)
+            $("#last_created").text(("Your last file was created on: " + localStorage.getItem('last')));
+        });
     </script>
     <style>
         .help_images {
@@ -394,6 +396,17 @@
     <p>
         Laptops/Desktops are recommended for this activity. We've detected you're using a mobile device.
     </p>
+</div>
+
+<div class="alert alert-info" role="alert">
+    <h3>Several Bug Fixes</h3>
+    <ul>
+        <li>Time remains consistent after daylight savings ends</li>
+        <li>Fixed the 'missing weeks' that weren't added</li>
+    </ul>
+    <br>
+    <strong>Please remake your .ics file if you've done it before 25/02/2017</strong>
+    <p id="last_created">Last created: </p>
 </div>
 
 <div class="row" style="width: 98%">
