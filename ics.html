@@ -384,6 +384,15 @@
             width: 100%;
             height: 350px;
         }
+
+        input[type=checkbox] {
+            /* Double-sized Checkboxes */
+            -ms-transform: scale(2); /* IE */
+            -moz-transform: scale(2); /* FF */
+            -webkit-transform: scale(2); /* Safari and Chrome */
+            -o-transform: scale(2); /* Opera */
+            padding: 10px;
+        }
     </style>
 </head>
 <body onload="bodyLoad()" style="width: 98%;">
@@ -456,11 +465,12 @@
         <br>
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="" id="clayton-addresses">
+                <input size="20px" type="checkbox" value="" id="clayton-addresses">
                 Force Melbourne Time-zone (if not checked it'll use your default timezone)
             </label>
         </div>
-        <button id="submit" onclick="make()">
+        <br><br>
+        <button style="width: 100%; height: 40px" id="submit" onclick="make()">
             Make .ics
         </button>
     </div>
