@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE  html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href='fcal/fullcalendar.min.css' rel='stylesheet' />
-    <link href='fcal/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-    <script src='fcal/lib/moment.min.js'></script>
-    <script src='fcal/lib/jquery.min.js'></script>
-    <script src='fcal/fullcalendar.min.js'></script>
+
+    <meta name="google-site-verification" content="CIv8DlK64UMcRLR233DVffSczA73z3y40Jh-7ndaC-g"/>
+    <title>Concept page</title>
+    <link href='../lib/fcal/fullcalendar.min.css' rel='stylesheet'/>
+    <link href='../lib/fcal/fullcalendar.print.min.css' rel='stylesheet' media='print'/>
+    <script src='../lib/fcal/lib/moment.min.js'></script>
+    <script src='../lib/jquery/jquery.min.js'></script>
+    <script src='../lib/jquery/jquery-ui.min.js'></script>
+    <script src='../lib/fcal/fullcalendar.min.js'></script>
 
     <script>
 
@@ -28,7 +29,11 @@
         });
 
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -40,6 +45,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+
 
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -143,7 +149,7 @@
                     var start = start_year + start_month + start_day + start_time;
                     var end = end_year + end_month + end_day + end_time;
 
-                    var a = document.getElementById("melbourne-force").checked;
+                    var a = document.getElementById("clayton-addresses").checked;
                     if (a) {
                         console.log("melbourne zone forced");
                         var calendarEvent = [
@@ -210,10 +216,6 @@
     <script>
 
         function make() {
-            var calEvents;
-
-
-
             var calEntry = icsFormatter();
             text = document.getElementById("csvValues").value;
 
@@ -307,10 +309,11 @@
                             var d2, m2;
                             d2 = ('0' + s[0]).slice(-2);
                             m2 = ('0' + s[1]).slice(-2);
-                            var periodEnd = new Date(year, m2 - 1, d2, 0, 0, 0, 0);
+                            var periodEnd = new Date(year, m2 - 1, d2, hours, minutes, 0, 0);
 
+                            console.log(periodBegin + "\n" + periodEnd);
 
-                            while (periodBegin.getTime() < periodEnd.getTime()) {
+                            while (periodBegin.getTime() <= periodEnd.getTime()) {
                                 var dur = duration.getNums();
                                 //console.log(dur[0]);
                                 var endTime = new Date(periodBegin.getTime() + dur[0] * 60 * 60 * 1000);
@@ -319,7 +322,7 @@
 
                                 console.log(title + description + finalLoc);
                                 calEntry.addEvent(title, description, finalLoc, periodBegin.toUTCString(), endTime.toUTCString());
-                                //myCalendar.fullCalendar.addEvent(title,description,finalLoc,periodBegin.toUTCString(), endTime.toUTCString());
+                                periodBegin = new Date(periodBegin.getFullYear(), periodBegin.getMonth(), periodBegin.getDate() + 7, periodBegin.getHours(), periodBegin.getMinutes(), 0, 0);
 
                                 var myEvent = {
                                     title:title,
@@ -327,9 +330,7 @@
                                     end: endTime
                                 };
                                 myCalendar.fullCalendar( 'renderEvent', myEvent );
-                                //myCalendar.fullCalendar.addEvent(title,description,finalLoc,periodBegin.toUTCString(), endTime.toUTCString());
 
-                                periodBegin = new Date(periodBegin.getTime() + 604800000);
                             }
                         }
                         else {
@@ -357,24 +358,18 @@
                                 start: periodBegin,
                                 end: endTime
                             };
-
                             myCalendar.fullCalendar( 'renderEvent', myEvent );
-                            //myCalendar.fullCalendar.addEvent(title,description,finalLoc,periodBegin.toUTCString(), endTime.toUTCString());
                         }
 
                     }
                 }
             }
 //TODO enable this download button
-            calEntry.download('MonashTT');
+            calEntry.download('MonashTT', 'ics');
+            localStorage.setItem('last', new Date().toDateString());
 
-
-            var rnum = Math.floor((Math.random() * 10) + 1);
-            if (rnum % 2 == 0) {
-                activaTab("feedback");
-            } else {
-                activaTab("about");
-            }
+            $("#last_created").innerHTML = (localStorage.getItem('last'));
+            activaTab("feedback");
         }
 
 
@@ -405,6 +400,11 @@
         function bodyLoad() {
             checkMobile();
         }
+
+        $(document).ready(function () {
+            if (localStorage.getItem('last') != null)
+                $("#last_created").text(("Your last file was created on: " + localStorage.getItem('last')));
+        });
     </script>
     <style>
         .help_images {
@@ -420,9 +420,16 @@
             width: 100%;
             height: 350px;
         }
+
+        input[type=checkbox] {
+            /* Double-sized Checkboxes */
+            -ms-transform: scale(2); /* IE */
+            -moz-transform: scale(2); /* FF */
+            -webkit-transform: scale(2); /* Safari and Chrome */
+            -o-transform: scale(2); /* Opera */
+            padding: 10px;
+        }
     </style>
-    
-    
 </head>
 <body onload="bodyLoad()" style="width: 98%;">
 <div style="display: none" id="mobile-alert" class="alert alert-danger alert-dismissible" role="alert">
@@ -434,6 +441,19 @@
         Laptops/Desktops are recommended for this activity. We've detected you're using a mobile device.
     </p>
 </div>
+
+<div class="alert alert-info" role="alert">
+    <h3>Several Bug Fixes</h3>
+    <ul>
+        <li>Time remains consistent after daylight savings ends</li>
+        <li>Fixed the 'missing weeks' that weren't added</li>
+    </ul>
+    <br>
+    <strong>Please remake your .ics file if you've done it before 25/02/2017</strong>
+    <p id="last_created"></p>
+</div>
+
+
 <div class="row" style="width: 98%">
     <div class="col-md-1"></div>
     <div class="col-md-8"><h1>Allocate+ to Calendar</h1>
@@ -444,6 +464,8 @@
     </div>
 
 </div>
+
+
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-4">
@@ -479,11 +501,12 @@
         <br>
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="" id="melbourne-force">
+                <input size="20px" type="checkbox" value="" id="clayton-addresses">
                 Force Melbourne Time-zone (if not checked it'll use your default timezone)
             </label>
         </div>
-        <button id="submit" onclick="make()">
+        <br><br>
+        <button style="width: 100%; height: 40px" id="submit" onclick="make()">
             Make .ics
         </button>
         <br><br>
@@ -520,12 +543,12 @@
                                 </a>
                                 and login
                             </h2>
-                            <img class="help_images" src="1.JPG">
+                            <img class="help_images" src="../img/steps/1.JPG">
                         </li>
                         <li>
                             <h2>Click the <span class="glyphicon glyphcon-download">Download</span> button
                             </h2>
-                            <img class="help_images" src="2.JPG">
+                            <img class="help_images" src="../img/steps/2.JPG">
                         </li>
                     </ul>
                 </div>
@@ -536,14 +559,14 @@
                             <p>Open the excel file and get rid of all existing commas using 'find and replace'(<kbd>Control
                                 + F</kbd>). <br>
                                 Replace it with NO spaces.</p>
-                            <img class="help_images" src="3.JPG">
+                            <img class="help_images" src="../img/steps/3.JPG">
                         </li>
                         <li>
                             <h2>Save as a <kbd>.csv</kbd> file</h2>
                             <p>
                                 Save it as a CSV file and click yes to all warnings
                             </p>
-                            <img class="help_images" src="4.JPG">
+                            <img class="help_images" src="../img/steps/4.JPG">
                         </li>
                     </ul>
                 </div>
@@ -564,7 +587,7 @@
                             <div class="alert alert-warning" role="alert">
                                 DO NOT INCLUDE THE BLANK LAST LINE
                             </div>
-                            <img class="help_images" src="5.JPG">
+                            <img class="help_images" src="../img/steps/5.JPG">
                         </li>
                     </ul>
                 </div>
@@ -580,7 +603,7 @@
                     <div class="row" style="width: 98%">
                         <div class="col-md-1"></div>
                         <div class="col-md-4">
-                            <img src="ishan.jpg" id="profile_pic">
+                            <img src="img/prof/ishan.jpg" id="profile_pic">
                         </div>
                         <div class="col-md-6">
                             <h2>Ishan Joshi</h2>
@@ -619,14 +642,7 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-8">
-        <div id="calendar1">
-        </div>
-    </div>
-    <div class="col-md-4">
 
-    </div>
-</div>
+
 </body>
-</html>
+
