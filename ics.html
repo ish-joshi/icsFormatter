@@ -287,10 +287,10 @@
                             var d2, m2;
                             d2 = ('0' + s[0]).slice(-2);
                             m2 = ('0' + s[1]).slice(-2);
-                            var periodEnd = new Date(year, m2 - 1, d2, 0, 0, 0, 0);
+                            var periodEnd = new Date(year, m2 - 1, d2, hours, minutes, 0, 0);
 
 
-                            while (periodBegin.getTime() < periodEnd.getTime()) {
+                            while (periodBegin.getTime() <= periodEnd.getTime()) {
                                 var dur = duration.getNums();
                                 //console.log(dur[0]);
                                 var endTime = new Date(periodBegin.getTime() + dur[0] * 60 * 60 * 1000);
