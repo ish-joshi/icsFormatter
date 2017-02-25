@@ -366,7 +366,8 @@
         }
 
         $(document).ready(function () {
-            $("#last_created").text(("Your last file was created on: " + localStorage.getItem('last')));
+            if (localStorage.getItem('last') != null)
+                $("#last_created").text(("Your last file was created on: " + localStorage.getItem('last')));
         });
     </script>
     <style>
