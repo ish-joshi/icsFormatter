@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="ishanjoshi.me" uploadOnCheckin="990d1563-b8a1-41ff-9bff-4a7eca36f96c">
+  <component name="PublishConfigData" autoUpload="Always" serverName="ishanjoshi.me" uploadOnCheckin="990d1563-b8a1-41ff-9bff-4a7eca36f96c">
     <serverData>
       <paths name="ishanjoshi.me">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/icsFormatter" local="$PROJECT_DIR$" web="icsFormatter" />
           </mappings>
         </serverdata>
       </paths>
     </serverData>
     <option name="myUploadOnCheckinName" value="ishanjoshi.me" />
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
