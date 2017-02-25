@@ -299,7 +299,8 @@
 
                                 console.log(title + description + finalLoc);
                                 calEntry.addEvent(title, description, finalLoc, periodBegin.toUTCString(), endTime.toUTCString());
-                                periodBegin = new Date(periodBegin.getTime() + 604800000);
+                                periodBegin = new Date(periodBegin.getFullYear(), periodBegin.getMonth(), periodBegin.getDate() + 7, periodBegin.getHours(), periodBegin.getMinutes(), 0, 0);
+                            
                             }
                         }
                         else {
@@ -393,6 +394,14 @@
     <p>
         Laptops/Desktops are recommended for this activity. We've detected you're using a mobile device.
     </p>
+</div>
+    <div class="alert alert-info" role="alert">
+    <h3>Several Bug Fixes</h3>
+    <ul>
+        <li>Time remains consistent after daylight savings ends</li>
+        <li>Fixed the 'missing weeks' that weren't added</li>
+    </ul><br>
+    <strong>Please remake your .ics file if you've done it before 25/02/2017</strong>
 </div>
 
 <div class="row" style="width: 98%">
