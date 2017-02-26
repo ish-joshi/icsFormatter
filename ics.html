@@ -337,12 +337,16 @@
 //            localStorage.setItem('last', new Date().toDateString());
 
             $("#last_created").innerHTML = (localStorage.getItem('last'));
-            activaTab("feedback");
+            activaTab("");
+            //Do
         }
 
-
         function activaTab(tab) {
-            $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+            if (tab == '')
+            //$('.nav-tabs a[href="#' + tab + '"]').tab('show');
+                $('#myModal').modal('show');
+            else
+                $('.nav-tabs a[href="#' + tab + '"]').tab('show');
         }
 
         String.prototype.getNums = function () {
@@ -474,7 +478,8 @@
             </label>
         </div>
         <br><br>
-        <button style="width: 100%; height: 40px" id="submit" onclick="make()">
+        <button style="width: 100%; height: 40px" id="submit" onclick="make()"
+                data-toggle="modal" data-target="#feedbackModal">
             Make .ics
         </button>
     </div>
@@ -604,6 +609,28 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Please provide feedback</h4>
+            </div>
+            <div class="modal-body">
+                <iframe
+                        style="overflow-y: hidden"
+                        src="https://docs.google.com/a/student.monash.edu/forms/d/e/1FAIpQLSetWParibqSuwUHsOwcPDl3AC1Z7IsZpsshdqqqyT9ApaOpPA/viewform?embedded=true"
+                        width="98%" height="600px" frameborder="0" marginheight="0" marginwidth="0">Loading...
+                </iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="activaTab('about')">Close
+                </button>
+            </div>
         </div>
     </div>
 </div>
