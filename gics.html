@@ -724,7 +724,7 @@ var infolinks_wsid = 0; </script>
      */
     //summary, loc, description, sDate, eDate
     function addEvent() {
-        alert("yolo");
+        /*alert("yolo");
         gapi.client.calendar.events.list({
          'calendarId': 'primary',
          'timeMin': (new Date()).toISOString(),
@@ -748,18 +748,19 @@ var infolinks_wsid = 0; </script>
          } else {
          appendPre('No upcoming events found.');
          }
-        });
-        /*var event = {
+         });*/
+        var event = {
             //'2015-05-28T17:00:00-07:00'
             'summary': summary,
             'location': loc,
             'description': description,
             'start': {
-                'dateTime': ISODateString(sDate),
+                'dateTime': '2015-05-28T17:00:00-07:00',
+                //ISODateString(sDate),
                 'timeZone': 'Australia/Melbourne'
             },
             'end': {
-                'dateTime': ISODateString(eDate),
+                'dateTime': '2015-05-28T18:00:00-07:00',
                 'timeZone': 'Australia/Melbourne'
             },
             'reminders': {
@@ -769,7 +770,7 @@ var infolinks_wsid = 0; </script>
                     {'method': 'popup', 'minutes': 30}
                 ]
             }
-         };*/
+        };
 
         var request = gapi.client.calendar.events.insert({
             'calendarId': 'primary',
