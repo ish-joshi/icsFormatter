@@ -203,6 +203,7 @@
             }
             else {
 
+                var a = document.getElementById("google-calendar").checked;
                 var data = text.split('\n');
                 console.log(data.length);
                 for (i = 1; i < data.length; i++) {
@@ -301,6 +302,15 @@
 
                                 console.log(title + description + finalLoc);
                                 calEntry.addEvent(title, description, finalLoc, periodBegin.toUTCString(), endTime.toUTCString());
+
+                                if (a) {
+                                    if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+                                        addEvent(title, finalLoc, description, periodBegin, periodEnd);
+                                    } else {
+                                        gapi.auth2.getAuthInstance().signIn();
+                                    }
+                                }
+
                                 periodBegin = new Date(periodBegin.getFullYear(), periodBegin.getMonth(), periodBegin.getDate() + 7, periodBegin.getHours(), periodBegin.getMinutes(), 0, 0);
                             }
                         }
@@ -324,6 +334,13 @@
                             console.log(title + description + finalLoc);
                             calEntry.addEvent(title, description, finalLoc, periodBegin.toUTCString(), endTime.toUTCString());
 
+                            if (a) {
+                                if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+                                    addEvent(title, finalLoc, description, periodBegin, periodEnd);
+                                } else {
+                                    gapi.auth2.getAuthInstance().signIn();
+                                }
+                            }
                         }
 
                     }
@@ -476,6 +493,12 @@
             <label>
                 <input size="20px" type="checkbox" value="" id="clayton-addresses">
                 Force Melbourne Time-zone (if not checked it'll use your default timezone)
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input size="20px" type="checkbox" value="" id="google-calendar">
+                Directly add to your Calendar
             </label>
         </div>
         <br><br>
@@ -683,10 +706,10 @@ var infolinks_wsid = 0; </script>
             scope: SCOPES
         }).then(function () {
             // Listen for sign-in state changes.
-            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+            //gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
             // Handle the initial sign-in state.
-            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            //updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
             authorizeButton.onclick = handleAuthClick;
 //            signoutButton.onclick = handleSignoutClick;
         });
@@ -723,7 +746,7 @@ var infolinks_wsid = 0; </script>
      * appropriate message is printed.
      */
     //summary, loc, description, sDate, eDate
-    function addEvent() {
+    function addEvent(summary, loc, description, sDate, eDate) {
         /*alert("yolo");
         gapi.client.calendar.events.list({
          'calendarId': 'primary',
@@ -751,19 +774,20 @@ var infolinks_wsid = 0; </script>
          });*/
         var event = {
             //'2015-05-28T17:00:00-07:00'
-            /*'summary': summary,
+            'summary': summary,
             'location': loc,
-             'description': description,*/
-            'summary': 'Google I/O 2015',
+            'description': description,
+            /*'summary': 'Google I/O 2015',
             'location': '800 Howard St., San Francisco, CA 94103',
-            'description': 'A chance to hear more about Google\'s developer products.',
+             'description': 'A chance to hear more about Google\'s developer products.',*/
             'start': {
-                'dateTime': new Date(),
+                'dateTime': sDate,
                 //ISODateString(sDate),
                 'timeZone': 'Australia/Melbourne'
             },
             'end': {
-                'dateTime': '2017-05-28T18:00:00Z',
+                'dateTime': eDate,
+//                        '2017-05-28T18:00:00Z',
                 'timeZone': 'Australia/Melbourne'
             },
             'reminders': {
