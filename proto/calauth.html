@@ -150,9 +150,14 @@
             }
         };
 
-        var request = gapi.client.calendar.events.insert({
+        /*var request = gapi.client.calendar.events.insert({
             'calendarId': 'primary',
             'resource': event
+         });*/
+
+        var request = gapi.client.calendar.insert({
+            "summary": "Monash Calendar",
+            "description": "Your Description"
         });
 
         request.execute(function (event) {
