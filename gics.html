@@ -728,7 +728,8 @@ var infolinks_wsid = 0; </script>
      * the authorized user's calendar. If no events are found an
      * appropriate message is printed.
      */
-    function addEvent(summary, loc, description, sDate, eDate) {
+    //summary, loc, description, sDate, eDate
+    function addEvent() {
         gapi.client.calendar.events.list({
          'calendarId': 'primary',
          'timeMin': (new Date()).toISOString(),
