@@ -128,7 +128,8 @@
                     var start = start_year + start_month + start_day + start_time;
                     var end = end_year + end_month + end_day + end_time;
 
-                    var a = document.getElementById("clayton-addresses").checked;
+//                    var a = document.getElementById("clayton-addresses").checked;
+                    var a = true;
                     if (a) {
                         console.log("melbourne zone forced");
                         var calendarEvent = [
@@ -174,7 +175,9 @@
                     ext = (typeof ext !== 'undefined') ? ext : '.ics';
                     filename = (typeof filename !== 'undefined') ? filename : 'calendar';
                     var calendar = calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
-                    window.open("data:text/calendar;charset=utf8," + escape(calendar));
+                    if (document.getElementById("generate-ics").checked) {
+                        window.open("data:text/calendar;charset=utf8," + escape(calendar));
+                    }
                     return calendar;
                 }
             };
@@ -300,7 +303,7 @@
 
                                 var description = campus + " " + desc;
 
-                                console.log(title + description + finalLoc);
+                                //console.log(title + description + finalLoc);
                                 calEntry.addEvent(title, description, finalLoc, periodBegin.toUTCString(), endTime.toUTCString());
                                 periodBegin = new Date(periodBegin.getFullYear(), periodBegin.getMonth(), periodBegin.getDate() + 7, periodBegin.getHours(), periodBegin.getMinutes(), 0, 0);
                             }
@@ -336,12 +339,18 @@
 
             $.post("icses/makeics.php", {ics: ical})
                 .done(function (data) {
-                    //alert( "Data Loaded: " + data );
-                    localStorage.setItem('link', "http://139.59.98.45/icsFormatter/icses/" + data);
+                    if (data == 'NONGENERATE')
+                        alert("Couldn't generate link");
+                    else {
+//                        alert( "Data Loaded: " + data );
+                        localStorage.setItem('link', "http://139.59.98.45/icsFormatter/icses/" + data);
+                        $(".eLink").text('http://139.59.98.45/icsFormatter/icses/' + data);
+                    }
                 });
 //            localStorage.setItem('last', new Date().toDateString());
 
-            $("#last_created").innerHTML = (localStorage.getItem('last'));
+            $("#last_created").text(localStorage.getItem('last'));
+
             activaTab("");
             //Do
         }
@@ -378,15 +387,13 @@
 
         function bodyLoad() {
             checkMobile();
-        }
-
-        $(document).ready(function () {
             if (localStorage.getItem('last') != null)
                 $("#last_created").text(("Your last file was created on: " + localStorage.getItem('last')));
             if (localStorage.getItem('link') != null) {
-                $("#last_created").text($("#last_created").text() + $("#last_created").text(localStorage.getItem('link')));
+                $(".eLink").text(localStorage.getItem(('link')));
             }
-        });
+            window.onbeforeunload = null;
+        }
     </script>
     <style>
         .help_images {
@@ -411,6 +418,11 @@
             -o-transform: scale(2); /* Opera */
             padding: 10px;
         }
+
+        .eLink {
+            color: red;
+            font-size: 1em;
+        }
     </style>
 </head>
 <body onload="bodyLoad()" style="width: 98%;">
@@ -433,7 +445,9 @@
     <br>
     <strong>Please remake your .ics file if you've done it before 25/02/2017</strong>
     <p id="last_created"></p>
-    <p>THIS CURRENTLY DOESN'T WORK ON MICROSOFT EDGE or INTERNET EXPLORER</p>
+    <br>
+    <p class="eLink"></p>
+    <p>"GET A COPY" DOESN'T WORK ON MICROSOFT EDGE or INTERNET EXPLORER</p>
 </div>
 
 
@@ -477,22 +491,34 @@
                             Import .ics file into iCal (Apple Users) software
                         </a>
                     </li>
+                    <li>
+                        <a href="https://www.gsa.gov/portal/mediaId/122190/fileName/ImportCalendarGoogle.action">
+                            Add calendar by URL
+                        </a>
+                    </li>
+                    <!--                    https://www.gsa.gov/portal/mediaId/122190/fileName/ImportCalendarGoogle.action-->
                 </ul>
             </li>
         </ul>
         <h2>Tool</h2>
         <textarea style="height: 12em; width: 100%" placeholder="Copy Paste your csv file" id="csvValues"></textarea>
         <br>
-        <div class="checkbox">
+        <!--<div class="checkbox">
             <label>
                 <input size="20px" type="checkbox" value="" id="clayton-addresses">
                 Force Melbourne Time-zone (if not checked it'll use your default timezone)
             </label>
         </div>
-        <br><br>
+        <br><br>-->
+        <div class="checkbox">
+            <label>
+                <input size="20px" type="checkbox" value="" id="generate-ics">
+                Get a copy
+            </label>
+        </div>
         <button style="width: 100%; height: 40px" id="submit" onclick="make()"
                 data-toggle="modal" data-target="#feedbackModal">
-            Make .ics
+            Generate Link
         </button>
     </div>
     <div class="col-md-7">
@@ -550,26 +576,45 @@
                             </p>
                             <img class="help_images" src="img/steps/4.JPG">
                         </li>
-                    </ul>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="step_3">
-                    <ul>
                         <li>
                             <h2>Open <kbd>.csv</kbd> file in Text Editor</h2>
-                            <p>
                             <ul>
                                 <li>
                                     Open the csv file using notepad or notepad++
                                 </li>
                                 <li>
-                                    Copy it's contents and paste in the textbox on the website
+                                    <p>
+                                        Copy it's contents and paste in the textbox on the website. <br>
+                                        Then press the
+                                    </p>
                                 </li>
                             </ul>
-                            </p>
+
                             <div class="alert alert-warning" role="alert">
                                 DO NOT INCLUDE THE BLANK LAST LINE
                             </div>
                             <img class="help_images" src="img/steps/5.JPG">
+                        </li>
+                    </ul>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="step_3">
+                    <ul>
+                        <li>
+                            <h2>Copy the link shown in red</h2>
+                            <img class="help_images" src="img/steps/6.JPG">
+                        </li>
+                        <li>
+                            <h2>Open Google Calendar</h2>
+                            <ul>
+                                <li>Open Google Calendar in Laptop/Desktop</li>
+                                <li>Locate the "Add by URL" option as shown</li>
+                                <li>Click "Add by URL"</li>
+                            </ul>
+                            <img class="help_images" src="img/steps/7.JPG">
+                        </li>
+                        <li>
+                            <h2>Paste the link generated</h2>
+                            <img class="help_images" src="img/steps/8.JPG">
                         </li>
                     </ul>
                 </div>
@@ -638,6 +683,7 @@
                 <h4 class="modal-title" id="myModalLabel">Please provide feedback</h4>
             </div>
             <div class="modal-body">
+                <p class="eLink"></p>
                 <iframe
                     style="overflow-y: hidden"
                     src="https://docs.google.com/a/student.monash.edu/forms/d/e/1FAIpQLSetWParibqSuwUHsOwcPDl3AC1Z7IsZpsshdqqqyT9ApaOpPA/viewform?embedded=true"
