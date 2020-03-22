@@ -170,7 +170,7 @@
                  */
                 'download': function (filename, ext) {
                     if (calendarEvents.length < 1) {
-                        return false;
+                        window.location.href = "data:text/calendar;charset=utf8," + escape(calendar)
                     }
 
                     ext = (typeof ext !== 'undefined') ? ext : '.ics';
