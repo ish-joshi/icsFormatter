@@ -176,7 +176,7 @@
                     ext = (typeof ext !== 'undefined') ? ext : '.ics';
                     filename = (typeof filename !== 'undefined') ? filename : 'calendar';
                     var calendar = calendarStart + SEPARATOR + calendarEvents.join(SEPARATOR) + calendarEnd;
-                    window.location.href = "data:text/calendar;charset=utf8," + escape(calendar);
+                    window.location.href = "data:text/calendar;charset=utf8," + escape(calendar)
                 }
             };
         };
@@ -210,7 +210,7 @@
                 for (i = 1; i < data.length; i++) {
 
                     var subjectCode, desc, group, activity, day, time, campus, location, staff, duration, dates;
-                    var arraydata = data[i].split(',');
+                    var arraydata = data[i].split('\t');
 
                     //fetch all variables of a row
                     subjectCode = arraydata[0];
@@ -264,9 +264,9 @@
                     milliseconds = 0;
 
                     //TODO update year based on date rather than fix definition
-                    year = 2017;
+                    year = ""+(new Date()).getFullYear();
 
-                    var lessionDates = dates.split(" ");
+                    var lessionDates = dates.split(", ");
                     for (q = 0; q < lessionDates.length; q++) {
 
                         if (lessionDates[q].indexOf("-") >= 0) {
@@ -337,7 +337,7 @@
 //            localStorage.setItem('last', new Date().toDateString());
 
             $("#last_created").innerHTML = (localStorage.getItem('last'));
-            activaTab("");
+            
             //Do
         }
         //testing commit
@@ -382,8 +382,7 @@
     </script>
     <style>
         .help_images {
-            width: 95%;
-            height: 650px;
+            width: 650px;
         }
 
         .tab-pane {
@@ -421,11 +420,6 @@
     </p>
 </div>
 
-<div class="alert alert-warning" role="alert">
-  <p> This site may not be fully working and is not supported. 
-    
-    <!--<p>THIS CURRENTLY DOESN'T WORK ON MICROSOFT EDGE or INTERNET EXPLORER</p>-->
-</div>
 
 
 <div class="row" style="width: 98%">
@@ -498,11 +492,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#step_1" aria-controls="home" role="tab"
-                                                          data-toggle="tab">Step 1</a></li>
-                <li role="presentation"><a href="#step_2" aria-controls="profile" role="tab" data-toggle="tab">Step
-                    2</a></li>
-                <li role="presentation"><a href="#step_3" aria-controls="messages" role="tab" data-toggle="tab">Step
-                    3</a></li>
+                                                          data-toggle="tab">Steps</a></li>
                 <li role="presentation"><a href="#feedback" aria-controls="feedback" role="tab" data-toggle="tab">Feedback</a>
                 </li>
                 <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About Me</a>
@@ -530,43 +520,11 @@
                             <img class="help_images" src="img/steps/2.JPG">
                         </li>
                     </ul>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="step_2">
                     <ul>
                         <li>
                             <h2>Open the Excel File</h2>
-                            <p>Open the excel file and get rid of all existing commas using 'find and replace'(<kbd>Control
-                                + F</kbd>). <br>
-                                Replace it with NO spaces.</p>
-                            <img class="help_images" src="img/steps/3.JPG">
-                        </li>
-                        <li>
-                            <h2>Save as a <kbd>.csv</kbd> file</h2>
-                            <p>
-                                Save it as a CSV file and click yes to all warnings
-                            </p>
-                            <img class="help_images" src="img/steps/4.JPG">
-                        </li>
-                    </ul>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="step_3">
-                    <ul>
-                        <li>
-                            <h2>Open <kbd>.csv</kbd> file in Text Editor</h2>
-                            <p>
-                            <ul>
-                                <li>
-                                    Open the csv file using notepad or notepad++
-                                </li>
-                                <li>
-                                    Copy it's contents and paste in the textbox on the website
-                                </li>
-                            </ul>
-                            </p>
-                            <div class="alert alert-warning" role="alert">
-                                DO NOT INCLUDE THE BLANK LAST LINE
-                            </div>
-                            <img class="help_images" src="img/steps/5.JPG">
+                            <p>Copy and paste all your classes into this tool app</p>
+                            <img class="help_images" src="img/steps/3.png" >
                         </li>
                     </ul>
                 </div>
